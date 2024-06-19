@@ -6,8 +6,8 @@ import pyscreeze
 from PIL import Image
 import pyautogui
 import numpy as np
-from paddleocr import PaddleOCR
-from paddleocr.tools.infer.utility import draw_ocr
+# from paddleocr import PaddleOCR
+# from paddleocr.tools.infer.utility import draw_ocr
 
 button_path = "./resource/img/button.png"
 button_img = Image.open('./resource/img/button.png')
@@ -88,38 +88,38 @@ def score(target_score: tuple = (8, 9, 10), weight: tuple = (1, 7, 2)):
             cache_img = imgs
 
 
-def orc_img_text(path="", saveImg=False, printResult=False):
-    """
-    图像文字识别
-    :param path: 图片路径
-    :param saveImg: 是否把结果保存为图片
-    :param printResult: 是否打印出识别结果
-    :return: result, img_name
-    """
-    if path == "":
-        image = pyautogui.screenshot()
-        image = np.array(image)
-    else:
-        image = Image.open(path).convert('RGB')
-
-    ocr = PaddleOCR(use_angle_cls=True, lang='ch')
-
-    result = ocr.ocr(image, cls=True)
-
-    if printResult is True:
-        for line in result:
-            for word in line:
-                print(word)
-
-    img_name = "ImgTextOCR-img-" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ".jpg"
-    if saveImg is True:
-        boxes = [detection[0] for line in result for detection in line]
-        txts = [detection[1][0] for line in result for detection in line]
-        scores = [detection[1][1] for line in result for detection in line]
-        im_show = draw_ocr(image, boxes, txts, scores)
-        im_show = Image.fromarray(im_show)
-        im_show.save(img_name)
-    return result, img_name
+# def orc_img_text(path="", saveImg=False, printResult=False):
+#     """
+#     图像文字识别
+#     :param path: 图片路径
+#     :param saveImg: 是否把结果保存为图片
+#     :param printResult: 是否打印出识别结果
+#     :return: result, img_name
+#     """
+#     if path == "":
+#         image = pyautogui.screenshot()
+#         image = np.array(image)
+#     else:
+#         image = Image.open(path).convert('RGB')
+#
+#     ocr = PaddleOCR(use_angle_cls=True, lang='ch')
+#
+#     result = ocr.ocr(image, cls=True)
+#
+#     if printResult is True:
+#         for line in result:
+#             for word in line:
+#                 print(word)
+#
+#     img_name = "ImgTextOCR-img-" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ".jpg"
+#     if saveImg is True:
+#         boxes = [detection[0] for line in result for detection in line]
+#         txts = [detection[1][0] for line in result for detection in line]
+#         scores = [detection[1][1] for line in result for detection in line]
+#         im_show = draw_ocr(image, boxes, txts, scores)
+#         im_show = Image.fromarray(im_show)
+#         im_show.save(img_name)
+#     return result, img_name
 
 
 if __name__ == '__main__':
